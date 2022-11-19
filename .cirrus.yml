@@ -1,0 +1,41 @@
+env:
+    MANIFEST: https://github.com/ArrowOS/android_manifest.git
+    MANIFEST_BRANCH: arrow-12.1
+    DEVICE: garden
+    OEM: xiaomi
+    DT_LINK: https://github.com/adarsh756/android_device_xiaomi_garden.git -b arrowos
+    DT_PATH: device/$OEM/$DEVICE
+    VT_LINK: https://github.com/Yukina-Supremacy/android_vendor_xiaomi_garden.git -b twelve30
+    VT_PATH: vendor/$OEM/$DEVICE
+    EXTRA_CMD: "git clone --depth=1 https://github.com/ghostrider-reborn/prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-6.x.git $SYNC_PATH/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-6.x"
+    LUNCH_COMBO: arrow_garden-userdebug
+    TARGET: bacon
+    OUTPUT: ArrowOS*.zip
+
+    # Not Recommended to Change
+    SYNC_PATH: $HOME/work # Do NOT use "~". Use $HOME instead.
+    CCACHE_SIZE: 30G
+    CCACHE_DIR: $HOME/work/.ccache
+    J_VAL: 16
+
+    # Cirrus Specific Vars (Do *NOT* Change)
+    CIRRUS_SHELL: bash
+
+task:
+  name: "AOSP Build"
+  trigger_type: manual
+  timeout_in: 120m
+  container:
+      image: registry.gitlab.com/sushrut1101/docker:latest
+      cpu: 8
+      memory: 32G
+
+  Sync_script:
+      - bash sync.sh
+
+  Build_script:
+      - bash build.sh
+     
+  Upload_script:
+      - export TIMEOUT=43200 # Download Link Timeout (in Minutes)
+      - bash upload.sh
