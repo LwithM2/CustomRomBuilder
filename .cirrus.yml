@@ -25,7 +25,7 @@ task:
   name: "AOSP Build"
   timeout_in: 240m
   container:
-      image: ghcr.io/sushrut1101/docker:arch
+      image: ghcr.io/sushrut1101/docker:latest
       cpu: 8
       memory: 32G
         
