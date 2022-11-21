@@ -29,13 +29,6 @@ task:
       cpu: 8
       memory: 32G
 
-  Build-Env-Setup_script:
-      - apt update
-      - apt install sudo 
-      - sudo apt-get install libncurses5
-
-
-
   Sync_script:
       - bash sync.sh
 
